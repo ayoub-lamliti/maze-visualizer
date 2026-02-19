@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Maze Algorithm Visualizer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+<style src="style.css"></style>
+<script src="script.js" defer ></script>
+</head>
+<body>
+
+<h1><span style="color:#63ffcc">MAZE</span><span style="color:rgba(255,255,255,0.25);margin:0 8px">/</span><span style="color:#f9a03f">ALGO</span><span style="color:rgba(255,255,255,0.25);margin:0 8px">/</span><span style="color:#b47fef">VIZ</span></h1>
+<p class="subtitle">DFS GENERATION &nbsp;·&nbsp; BFS &nbsp;·&nbsp; A* &nbsp;·&nbsp; DIJKSTRA</p>
+
+<div class="layout">
+  <!-- LEFT -->
+  <div>
+    <div class="tabs">
+      <button class="tab active-gen" id="tab-gen" onclick="switchPhase('generate')">🌲 GENERATE (DFS)</button>
+      <button class="tab" id="tab-solve" onclick="switchPhase('solve')">🧩 SOLVE</button>
+    </div>
+
+    <div class="algo-pills" id="algo-pills">
+      <button class="algo-pill active-bfs" id="pill-bfs"   onclick="switchSolveAlgo('bfs')">BFS</button>
+      <button class="algo-pill"            id="pill-astar" onclick="switchSolveAlgo('astar')">A*</button>
+      <button class="algo-pill"            id="pill-dijk"  onclick="switchSolveAlgo('dijkstra')">Dijkstra</button>
+      <label class="score-toggle" id="score-toggle-label">
+        <input type="checkbox" id="score-toggle" onchange="renderMaze()" /> Show g/f scores
+      </label>
+    </div>
+
+    <div class="maze-wrap">
+      <div id="maze"></div>
+    </div>
+    <div class="path-banner" id="path-banner"></div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="sidebar">
+    <!-- Step counter -->
+    <div class="card">
+      <div class="step-counter" id="step-counter">Step 1 / 1</div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+
+    <!-- Step info -->
+    <div class="card">
+      <div class="card-label">Current Step</div>
+      <div class="step-type" id="step-type">—</div>
+      <div class="step-msg" id="step-msg">Click ▶ PLAY to begin</div>
+    </div>
+
+    <!-- Controls -->
+    <div class="card">
+      <div class="card-label">Playback</div>
+      <div class="btn-grid">
+        <button class="btn btn-green"  id="btn-play"     onclick="togglePlay()">▶ PLAY</button>
+        <button class="btn btn-purple" id="btn-reset"    onclick="resetAll()">🔄 RESET</button>
+        <button class="btn btn-orange" id="btn-prev"     onclick="stepBackward()">◀ PREV</button>
+        <button class="btn btn-blue"   id="btn-next"     onclick="stepForward()">NEXT ▶</button>
+      </div>
+    </div>
+
+    <!-- Speed -->
+    <div class="card">
+      <div class="card-label">⚡ Speed — <span id="speed-val">300ms</span></div>
+      <input type="range" min="50" max="1500" step="50" value="300" id="speed-slider" oninput="updateSpeed(this.value)" />
+      <div class="speed-labels"><span>Fast</span><span>Slow</span></div>
+    </div>
+
+    <!-- Maze size -->
+    <div class="card">
+      <div class="card-label">🔲 Maze Size</div>
+      <div class="size-grid" id="size-grid">
+        <button class="size-btn" onclick="changeSize(3)">3×3</button>
+        <button class="size-btn" onclick="changeSize(4)">4×4</button>
+        <button class="size-btn active" onclick="changeSize(5)">5×5</button>
+        <button class="size-btn" onclick="changeSize(6)">6×6</button>
+        <button class="size-btn" onclick="changeSize(7)">7×7</button>
+        <button class="size-btn" onclick="changeSize(8)">8×8</button>
+      </div>
+    </div>
+
+    <!-- Stack/Queue -->
+    <div class="card">
+      <div class="card-label" id="stack-label">📚 DFS Stack</div>
+      <div class="stack-list" id="stack-list"><span class="stack-empty">empty</span></div>
+    </div>
+
+    <!-- Legend -->
+    <div class="card">
+      <div class="card-label">🎨 Legend</div>
+      <div class="legend-grid">
+        <div class="legend-item"><div class="legend-dot" style="background:rgba(255,220,50,0.32)"></div>Current</div>
+        <div class="legend-item"><div class="legend-dot" style="background:rgba(99,255,200,0.22)"></div>Path</div>
+        <div class="legend-item"><div class="legend-dot" style="background:rgba(99,255,200,0.07)"></div>Visited</div>
+        <div class="legend-item"><div class="legend-dot" style="background:rgba(100,180,255,0.18)"></div>Open Set</div>
+        <div class="legend-item"><div class="legend-dot" style="background:rgba(255,90,90,0.13)"></div>Closed Set</div>
+        <div class="legend-item"><div class="legend-dot" style="background:rgba(5,10,20,0.92)"></div>Unvisited</div>
+      </div>
+    </div>
+
+    <!-- Algo info -->
+    <div class="card" id="algo-info-card">
+      <div class="card-label">ℹ️ Algorithm Info</div>
+      <div class="algo-info" id="algo-info-text">DFS maze generation uses a randomized depth-first search with backtracking to carve a perfect maze where every cell is reachable.</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
