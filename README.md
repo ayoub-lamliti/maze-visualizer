@@ -32,7 +32,7 @@ Watch DFS carve a maze, then solve it with BFS, A\*, or Dijkstra — all in a si
 
 ```bash
 # Just open the file in your browser
-open maze-visualizer.html
+open index.html
 ```
 
 Or double-click `maze-visualizer.html` — that's it. No server, no npm, no build step.
