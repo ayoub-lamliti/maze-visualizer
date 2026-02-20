@@ -35,7 +35,7 @@ Watch DFS carve a maze, then solve it with BFS, A\*, or Dijkstra — all in a si
 open index.html
 ```
 
-Or double-click `maze-visualizer.html` — that's it. No server, no npm, no build step.
+Or double-click `index.html` — that's it. No server, no npm, no build step.
 
 ---
 
